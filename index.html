@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will I get hit by space debris?</title>
+    <style>
+      .container {
+        width: min(600px, 80%);
+        margin: auto;
+        background-color: #eee;
+        padding: 1em;
+        text-align: center;
+      }
+
+      button {
+        color: white;
+        background-color: teal;
+        border: 2px solid teal;
+        border-radius: 10px;
+        padding: 1em 1.75em;
+      }
+
+      button:is(:hover, :focus) {
+        color: teal;
+        border: 2px solid teal;
+        background-color: white;
+      }
+
+      button.disabled {
+        color: #ccc;
+        background-color: #ddd;
+        border: none;
+      }
+
+      a {
+        color: teal;
+        text-decoration: none;
+      }
+
+      a:is(:hover, :focus) {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main-content" class="container">
+      <h1>Will I get hit by space debris?</h1>
+      <button id="location-button">Load Location Data</button>
+    </div>
+    <footer>
+      Made by
+      <a href="https://github.com/JustinBoehnen" target="_blank"
+        >Justin Beohnen</a
+      >
+    </footer>
+    <script>
+      const button = document.querySelector('#location-button')
+
+      button.onclick = (e) => {
+        e.preventDefault()
+
+        navigator.geolocation.getCurrentPosition((location) => {
+          const main = document.querySelector('#main-content')
+          const p = document.createElement('p')
+          const p2 = document.createElement('p')
+
+          p.innerHTML = `Location: ${location.coords.latitude}, ${location.coords.longitude}`
+          p2.innerHTML = "<strong>NO!</strong> You won't get hit..."
+
+          main.appendChild(p)
+
+          setTimeout(() => main.appendChild(p2), 3000)
+
+          button.classList.add('disabled')
+        })
+      }
+    </script>
+  </body>
+</html>
